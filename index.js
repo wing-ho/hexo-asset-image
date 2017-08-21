@@ -1,5 +1,6 @@
 'use strict';
 var cheerio = require('cheerio');
+var path = require("path");
 
 // http://stackoverflow.com/questions/14480345/how-to-get-the-nth-occurrence-in-a-string
 function getPosition(str, m, i) {
@@ -44,6 +45,10 @@ hexo.extend.filter.register('after_post_render', function(data){
 				srcArray.shift();
 			  src = srcArray.join('/');
 			  $(this).attr('src', config.root + link + src);
+			  console.info&&console.info("update link as:-->"+config.root + link + src);
+			}else if(/^file:.*/.test(src)){
+			  var basename = path.basename(src);
+			  $(this).attr('src',config.root+link+basename)
 			  console.info&&console.info("update link as:-->"+config.root + link + src);
 			}
 		}else{
